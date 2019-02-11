@@ -1,0 +1,174 @@
+
+	<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<div class="cont-slider">
+					<img class="d-block w-100" src="img/slider.jpg" alt="slider" style="max-height: 200px; width: auto; object-fit: cover; filter: brightness(50%);">
+					<h1 class="center-slider">Quiz</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="quiz_div" style="padding: 20px; background-color: #fff; width: 90%; margin: 0 auto;">
+		<div class="container"><h1>Rozwiąż QUIZ o butach!</h1></div>
+		<div class="container"><h3>Zaznacz prawidłowe odpowiedzi.</h3></div><br>
+		<div class="container">
+			<h4>Ile kosztują najdroższe buty świata?</h4>
+			<div id="radioset">
+				<input type="radio" name="q1" value="1" id="r1"><label for="r1"> Ponad 62 mln</label>
+				<input type="radio" name="q1" value="2" id="r2"><label for="r2"> Ponad 1 mld</label><br>
+			</div>
+
+			<h4>Które buty są bardziej wytrzymałe?</h4>
+			<div id="radioset2">
+				<input type="radio" name="q2" value="1" id="r4"><label for="r4"> Trampki</label>
+				<input type="radio" name="q2" value="2" id="r5"><label for="r5"> Glany</label><br>
+			</div>
+
+			<h4>Buty na grubszym, wysokim obcasie to:</h4>
+			<div id="radioset3">
+				<input type="radio" name="q3" value="1" id="r6"><label for="r6"> Botki</label>
+				<input type="radio" name="q3" value="2" id="r7"><label for="r7"> Szpilki</label><br>
+			</div>
+			
+
+			<h4>Ile pasków znajduje się na bucie firmy Adidas?</h4>
+			<div id="radioset4">
+				<input type="radio" name="q4" value="1" id="r8"><label for="r8"> 3</label>
+				<input type="radio" name="q4" value="2" id="r9"><label for="r9"> 6</label><br>
+			</div>
+
+			<h4>Buty której marki są tańsze?</h4>
+			<div id="radioset5">
+				<input type="radio" name="q5" value="1" id="r10"><label for="r10"> GUCCI</label>
+				<input type="radio" name="q5" value="2" id="r11"><label for="r11"> Calvin Klein</label><br>
+			</div>
+			
+			<br><br>
+			<p><input type="button" value="Sprawdź" id="check_test"><br></p>
+			<div id="result"></div><br>
+		</div>
+	</div>
+	<div style="display: none;">
+		<div id="dialog" title="Error">
+			<p>Proszę odpowidzieć na wszystkie pytania.</p>
+		</div>
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="./jquery-ui/external/jquery/jquery.js"></script>
+	<script src="./jquery-ui/jquery-ui.min.js"></script>
+	<script>
+			//JQUERY UI
+			$( "#radioset" ).buttonset();  // KOMPONENT JQUERY UI - RADIO
+			$( "#radioset2" ).buttonset();
+			$( "#radioset3" ).buttonset();
+			$( "#radioset4" ).buttonset();
+			$( "#radioset5" ).buttonset();
+			$( "#check_test" ).button();  // KOMPONENT JQUERY UI - BUTTON
+			//KONIEC JQUERY UI
+
+			$("#check_test").click(function() {					//KOD W JQUERY, OGÓLNIE WSZĘDZIE GDZIE JEST $(...).abc() itp JEST JQUERY
+				if (false) {
+					
+				}
+				var arr = [];
+				arr.push($('input[name=q1]:checked').val());
+				arr.push($('input[name=q2]:checked').val());
+				arr.push($('input[name=q3]:checked').val());
+				arr.push($('input[name=q4]:checked').val());
+				arr.push($('input[name=q5]:checked').val());
+
+				var err = 0;
+
+				arr.forEach(function(entry) {
+					if (entry == undefined) {
+						err = 1
+				    	$( "#dialog" ).dialog({	 // KOMPONENT JQUERY UI - DIALOG, OKNO DIALOGOWE
+				    		autoOpen: true,
+				    		width: 400,
+				    		buttons: [
+				    		{
+				    			text: "Ok",
+				    			click: function() {
+				    				$( this ).dialog( "close" );
+				    			}
+				    		},
+				    		{
+				    			text: "Cancel",
+				    			click: function() {
+				    				$( this ).dialog( "close" );
+				    			}
+				    		}
+				    		]
+				    	});
+				    }
+				});
+
+				if (err == 1)
+					return;
+
+				var points = check_answers(arr);
+
+				$("#check_test").remove();									//LOCAL STORAGE
+				$("#result").append("Zdobyłeś/aś ");
+				$("#result").append(points);
+				$("#result").append("/5 pkt");
+				if (localStorage.getItem("last_points") != null) {
+					$("#result").append("<br>Poprzedni wynik: ");
+					$("#result").append(localStorage.getItem("last_points"));
+				}
+				
+				save_answers(points);
+				change_bg(points);
+				append_link();
+				
+			});
+
+			function append_link() {		// JS + API DOM- MODYFIKACJA STRUKTURY DOKUMENTU- DOPISANIE ELEMENTU '<a>'
+			var link = document.createElement('a');
+			var textlink = document.createTextNode("Link do ciekawego artykułu o butach");
+			link.setAttribute('href', "https://wszystkoobutach.pl/czy-wiesz-ze-czyli-ciekawostki-na-temat-butow/");
+			link.setAttribute('style', "padding: 20px; font-size: 2opx; text-decoration: none; font-weight: bold; padding: 10px;");
+			link.appendChild(textlink);
+			document.getElementById("quiz_div").appendChild(link);
+
+		}
+
+		function check_answers(arr) {
+			var points = 0;
+			if (arr[0] == '1')
+				points++;
+			if (arr[1] == '2')
+				points++;
+			if (arr[2] == '1')
+				points++;
+			if (arr[3] == '2')
+				points++;
+			if (arr[4] == '2')
+				points++;
+			return points;
+
+		}
+
+		function save_answers(points) {
+				sessionStorage.setItem("last_points", points);		// SESSION STORAGE
+			}
+
+			function save_quiz() {
+				localStorage.setItem("last_points", sessionStorage.getItem("last_points"));		// LOCAL STORAGE
+			}
+
+			function change_bg(points) {								// JS + API DOM MODYFIKACJA WYGLĄDU- KOLORU TŁA
+				if (points == '5')
+					document.body.style.backgroundColor = "#bee8bf";
+				
+				else
+					document.body.style.backgroundColor = "#f7d2d2";
+			}
+
+			
+		</script>
