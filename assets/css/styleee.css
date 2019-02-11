@@ -1,0 +1,159 @@
+body{
+    font-family: Arial;
+     margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    
+}
+h1.header{
+    
+    text-align:center;
+    margin-bottom:35px;
+    margin-top:35px;
+    font-size:54px;
+	line-height:0px;
+    color:brown;
+
+}
+h2{
+ text-align: right;
+    color:brown;
+    
+}
+
+
+h1::selection {                                  /* pseudoelement*/
+    color:aqua;
+    background: black;
+}
+
+h4.title{
+    font-size: 20px;
+}
+h4{
+    font-size: 20px;
+    color: aqua
+}
+h4.kupno{
+    font-size: 10px;
+}
+#content{
+    padding: 20px;    
+}
+table
+{
+    font-size:14px;
+	border:1px solid;
+	margin: 0 auto;
+	text-align:center;
+	
+	
+}
+th, td, tr
+{
+	border:2px solid;
+	padding: 5px;
+}
+#blok {
+        position:relative;
+        width:500px;
+        height:2.2em;
+        line-height:2.2em;
+        margin:0 auto;
+        border:3px solid #DDD;
+        font-size:1.5em;
+        background-color:#EEE;
+        overflow:hidden;
+      }
+
+      #blok > p {
+        position:absolute;
+        margin:0;
+        white-space:nowrap;
+        animation:przesun 10s linear infinite;
+        -webkit-animation:przesun 10s linear infinite; 
+      }
+
+      #blok > p:hover {
+        animation-play-state:paused;
+        -webkit-animation-play-state:paused;
+      }
+	  
+      /* ------------ANIMACJA-PRZESUN------------ */
+      @keyframes przesun
+      {
+        0% { transform:translateX(0); padding-left:110%; }
+        100% { transform:translateX(-100%); padding-left:110%; }
+      }
+
+     
+#content img.photo
+{
+	display:inline-block;
+	height:300px;
+	width:400px;
+	margin: 15px;
+    object-fit: cover;
+}
+
+.cont-slider {
+     position: relative;
+    text-align: center;
+    color: white;
+}
+
+.cont-slider h1 {
+    font-size: 40px;
+}
+
+.center-slider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 1000px) {
+    
+    #content img.photo {
+        display: inline;
+        height:400px;
+        width:500px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload{
+    width: 100%;
+}
