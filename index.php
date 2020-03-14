@@ -1,13 +1,10 @@
 <?php
-//front controller
 
-	//obsługa sesji
 session_start();
-	//kontrola dostępu
+
 require 'access.php';
 require 'views/topbar.php';
 
-	//wybór kontrolera do wywołania:
 $action_url = $_GET['page'];
 
 switch ($action_url) {
